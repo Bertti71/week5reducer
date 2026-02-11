@@ -5,14 +5,20 @@ import type { Todo } from "../types/todo";
 type Props = {
   todo: Todo;
   onToggle: (id: string) => void;
+  onRemove: (id: string) => void;
 };
 
-export default function TodoItem({ todo, onToggle }: Props) {
+export default function TodoItem({ todo, onToggle, onRemove }: Props) {
   return (
-    <Pressable style={styles.item} onPress={() => onToggle(todo.id)}>
+    <Pressable
+      style={styles.item}
+      onPress={() => onToggle(todo.id)}
+      onLongPress={() => onRemove(todo.id)}
+    >
       <Text
         style={[
-          styles.text, todo.done ? styles.done : null 
+          styles.text,
+          todo.done ? styles.done : null
         ]}
       >
         {todo.text}
@@ -29,6 +35,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   done: {
-    textDecorationLine: "line-through",  opacity: 0.5,
+    textDecorationLine: "line-through", opacity: 0.5,
   },
 });
